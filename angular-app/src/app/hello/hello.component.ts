@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
   selector: 'app-hello',
@@ -7,26 +9,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelloComponent implements OnInit {
   title: string = '';
-  message: string = '';
-  nowClass: any;
+  message: string[] = [];
+  lastTarget: any;
+  lastColor: string = '';
+  input1: string = '';
+  @ViewChild(MessageComponent)
+  private msgComponent: MessageComponent = new MessageComponent();
 
   /**
    * 初期化処理
    */
   ngOnInit(): void {
     this.title = 'Hello-app';
-    this.message = 'false, false, false';
-    this.nowClass = {
-      'thin': false,
-      'large': false,
-      'frame': false,
-    }
+    this.message = [
+      'First item.',
+      'Second Item',
+      'Third item.'
+    ];
   }
 
-  check(c1: any, c2: any, c3: any) {
-    this.nowClass.thin = c1;
-    this.nowClass.large = c2;
-    this.nowClass.frame = c3;
-    this.message = c1 + ',' + c2 + ',' + c3;
+  push() {
+    if (this.input1 === '') {
+      alert('テキストを入力してください');
+      return
+    }
+    this.msgComponent.push(this.input1);
+    this.input1 = '';
+  }
+
+  pop() {
+    this.msgComponent.pop();
+  }
+
+  doClick(event: any) {
+    if (this.lastTarget) {
+      this.lastTarget.style.color = this.lastColor;
+      this.lastTarget.styel.backgroundColor = 'white';
+    }
+    this.lastTarget = event.target;
+    this.lastColor = event.target.style.color;
+    event.target.style.color = 'white';
+    event.target.style.backgroundColor = 'red'
   }
 }

@@ -1,8 +1,13 @@
 <div id="body">
   <h1>{{title}}</h1>
-  <p [ngClass]="nowClass">ngClass: {{message}}</p>
-  <input type="checkbox" name="" id="" #ck1 (change)="check(ck1.checked, ck2.checked, ck3.checked);">Thin
-  <input type="checkbox" name="" id="" #ck2 (change)="check(ck1.checked, ck2.checked, ck3.checked);">Large
-  <input type="checkbox" name="" id="" #ck3 (change)="check(ck1.checked, ck2.checked, ck3.checked);">Thin
+  <!-- <div>add item...</div>
+  <div>
+    <input type="text" #input1>
+    <button (click)="list1.push(input1.value)">push</button>
+    <button (click)="list1.pop()">pop</button>
+  </div>
+  <app-message #list1 [content]="message" (action)="doClick($event)"></app-message> -->
 
+  <p>This is No-style Directive!</p>
+  <p appMystyle>This is My-style Directive!</p>
 </div>
