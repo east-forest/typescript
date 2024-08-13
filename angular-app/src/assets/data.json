@@ -1,0 +1,9 @@
+{
+  "data":"this is sample data",
+  "list":[
+    {"name":"Taro", "mail":"taro@yahoo.co.jp", "tel":"090-999-999"},
+    {"name":"Hinako", "mail":"hinako@yahoo.co.jp", "tel":"080-999-999"},
+    {"name":"Sachiko", "mail":"sachiko@yahoo.co.jp", "tel":"070-999-999"},
+    {"name":"Jiro", "mail":"jiro@yahoo.co.jp", "tel":"060-999-999"}
+  ]
+}

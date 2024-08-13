@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +8,17 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'angular-app';
+  message = '';
+
+  constructor(private router: Router) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.navigate(event)
+      }
+    })
+  }
+
+  navigate(event: NavigationStart) {
+    this.message = event.url
+  }
 }

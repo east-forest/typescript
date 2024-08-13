@@ -1,28 +1,58 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MycheckService } from '../mycheck.service';
+import { FormControl } from '@angular/forms';
+import { filter, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
-  styleUrl: './message.component.css'
+  styleUrl: './message.component.css',
 })
 export class MessageComponent implements OnInit {
-  @Input() content: string[] = [];
-  @Output() action = new EventEmitter<MouseEvent>;
+  input: FormControl = new FormControl();
+  message: string = '';
+  @ViewChild('btn')
+  btn!: ElementRef;
 
-  constructor() { }
+  constructor(private service: MycheckService) { }
+
   ngOnInit(): void {
+    this.input = new FormControl('');
+    this.message = 'mydata list';
+    const btn = this.btn.nativeElement;
+    fromEvent<MouseEvent>(btn, 'click')
+      .pipe(
+        filter((res: MouseEvent, n: number) => {
+          if (res.shiftKey) {
+            return false;
+          }
+          return true;
+        })
+      )
+      .subscribe((event: MouseEvent) => {
+        this.doAction();
+      });
   }
 
-  doAction(event: any) {
-    this.action.emit(event);
+  updateData(ck: any) {
+    this.service.updateDate(ck);
   }
 
-  push(item: string) {
-    this.content.push(item)
+  getData() {
+    return this.service.data;
   }
 
-  pop() {
-    this.content.pop();
+  getList() {
+    return this.service.list;
   }
 
+  doAction() {
+    let n = parseInt(this.input.value);
+    if (n) {
+      let p = this.service.get(n);
+      this.message = JSON.stringify(p);
+    } else {
+      alert('数値を入力してください');
+    }
+  }
 }
